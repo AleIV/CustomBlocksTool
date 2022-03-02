@@ -24,20 +24,16 @@ public class CustomBlocksManager{
         return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
     }
 
-    public CustomBlock getCustomBlock(String name) {
-        return customBlocks.containsKey(name) ? customBlocks.get(name) : null;
-    }
-
     public CustomBlock getDecoItemByBlockID(String blockID) {
         return customBlocks.values().stream().filter(decoItem -> decoItem.getBlockID().equals(blockID)).findAny()
                 .orElse(null);
     }
 
     public boolean isCustomBlock(ItemStack item) {
-        if (!item.hasItemMeta())
+        if (item.getType() != Material.NOTE_BLOCK || !item.hasItemMeta() || !item.getItemMeta().hasCustomModelData())
             return false;
         var meta = item.getItemMeta();
-        if ((meta.hasCustomModelData() && (item.getType() == Material.RABBIT_HIDE || item.getType() == Material.NOTE_BLOCK)) || isDecoHammer(item)) {
+        if (meta.hasCustomModelData()) {
             var data = meta.getCustomModelData();
             return !customBlocks.values().stream().filter(deco -> deco.getCustomModelData() == data).toList().isEmpty();
         }
@@ -45,8 +41,9 @@ public class CustomBlocksManager{
     }
 
     public CustomBlock getCustomBlock(ItemStack item) {
-        var meta = item.getItemMeta();
-        if (isDecoItem(item)) {
+        
+        if (isCustomBlock(item)) {
+            var meta = item.getItemMeta();
             var data = meta.getCustomModelData();
             return customBlocks.values().stream().filter(deco -> deco.getCustomModelData() == data).findAny().orElse(null);
         }
@@ -54,20 +51,26 @@ public class CustomBlocksManager{
     }
 
     public CustomBlock getCustomBlock(Location loc) {
-        var world = loc.getWorld();
-        var noteBlockManager = instance.getNoteBlockManager();
-        var block = world.getBlockAt(loc);
+        var block = loc.getBlock();
         if(isCustomBlock(block)){
-            
+            var noteBlockManager = instance.getNoteBlockManager();
+
+            var blockID = noteBlockManager.getBlockID(block);
+            return getCustomBlock(blockID);
         }
         return null;
+    }
 
+    public CustomBlock getCustomBlock(String blockID){
+        return customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).findAny().orElse(null);
     }
 
     public boolean isCustomBlock(Block block){
         var noteBlockManager = instance.getNoteBlockManager();
-        noteBlockManager.isNoteBlock(block);
-        return false;
+        if(!noteBlockManager.isNoteBlock(block)) return false;
+
+        var blockID = noteBlockManager.getBlockID(block);
+        return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
     }
 
 }

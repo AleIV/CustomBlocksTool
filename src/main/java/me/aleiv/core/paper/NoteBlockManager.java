@@ -102,6 +102,10 @@ public class NoteBlockManager {
 
     }
 
+    public String getBlockID(Block block){
+        return getBlockID(getNoteBlockData(block));
+    }
+
     public String getBlockID(NoteBlock noteBlock) {
         var nt = getNoteBlockID(noteBlock);
 

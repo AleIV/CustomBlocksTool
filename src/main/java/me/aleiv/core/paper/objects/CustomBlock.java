@@ -7,10 +7,12 @@ public class CustomBlock {
 
     String name;
     String blockID;
+    int customModelData;
 
-    public CustomBlock(String name, String blockID) {
+    public CustomBlock(String name, String blockID, int customModelData) {
         this.name = name;
         this.blockID = blockID;
+        this.customModelData = customModelData;
         
     }
 

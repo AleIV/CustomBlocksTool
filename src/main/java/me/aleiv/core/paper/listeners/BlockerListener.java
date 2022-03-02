@@ -13,11 +13,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 
 import me.aleiv.core.paper.Core;
 
-public class CustomBlocksListener implements Listener{
+public class BlockerListener implements Listener{
     
     Core instance;
 
-    public CustomBlocksListener(Core instance){
+    public BlockerListener(Core instance){
         this.instance = instance;
     }
 
@@ -63,9 +63,9 @@ public class CustomBlocksListener implements Listener{
                 
             e.setCancelled(true);
 
-            var tool = instance.getNoteBlockTool();
+            var tool = instance.getNoteBlockManager();
             if (tool.isDefaultNoteBlock(block)) {
-                // vanilla noteblock
+                //TODO: vanilla noteblock
             }
         }
     }

@@ -26,7 +26,15 @@ public class CustomBlocksCMD extends BaseCommand {
 
         
         sender.sendMessage(ChatColor.BLUE + "Give sender" + customBlock);
+        
+    }
 
+    @Subcommand("add")
+    public void add(Player sender, String customBlock){
+
+        
+        sender.sendMessage(ChatColor.BLUE + "Added new custom block " + customBlock);
+        //TODO: CHECK IF is already added
     }
 
 }

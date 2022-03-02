@@ -10,7 +10,7 @@ import co.aikar.commands.PaperCommandManager;
 import kr.entree.spigradle.annotations.SpigotPlugin;
 import lombok.Getter;
 import me.aleiv.core.paper.commands.CustomBlocksCMD;
-import me.aleiv.core.paper.listeners.CustomBlocksListener;
+import me.aleiv.core.paper.listeners.BlockerListener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 @SpigotPlugin
@@ -29,7 +29,7 @@ public class Core extends JavaPlugin {
 
         //LISTENERS
 
-        Bukkit.getPluginManager().registerEvents(new CustomBlocksListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new BlockerListener(this), this);
 
         //COMMANDS
         
