@@ -1,6 +1,11 @@
 package me.aleiv.core.paper.objects;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
 import lombok.Data;
+import net.md_5.bungee.api.ChatColor;
+import us.jcedeno.libs.rapidinv.ItemBuilder;
 
 @Data
 public class CustomBlock {
@@ -14,6 +19,11 @@ public class CustomBlock {
         this.blockID = blockID;
         this.customModelData = customModelData;
         
+    }
+
+    public ItemStack getItemStack() {
+        return new ItemBuilder(Material.NOTE_BLOCK).meta(meta -> meta.setCustomModelData(customModelData))
+        .name(ChatColor.WHITE + name).build();
     }
 
 }

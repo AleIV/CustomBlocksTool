@@ -1,5 +1,6 @@
 package me.aleiv.core.paper.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,6 +10,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import me.aleiv.core.paper.Core;
+import me.aleiv.core.paper.events.CustomBlockClickEvent;
+import net.md_5.bungee.api.ChatColor;
 
 public class NoteBlockListener implements Listener {
 
@@ -19,50 +22,48 @@ public class NoteBlockListener implements Listener {
     }
 
     @EventHandler
+    public void onClick(CustomBlockClickEvent e){
+        Bukkit.broadcastMessage(ChatColor.AQUA + e.toString());
+    }
+
+    @EventHandler
     public void onClick(PlayerInteractEvent e) {
         var block = e.getClickedBlock();
-        var action = e.getAction();
 
-        if (action == Action.RIGHT_CLICK_BLOCK && block != null && block.getType() == Material.NOTE_BLOCK) {
+        if (block != null && block.getType() == Material.NOTE_BLOCK) {
+            var customBlockManager = instance.getCustomBlocksManager();
+            var action = e.getAction();
 
-            var tool = instance.getNoteBlockManager();
-            var manager = instance.getCustomBlocksManager();
-            var guiCodes = manager.getGuiCodes();
+            if (customBlockManager.isCustomBlock(block) && (action == Action.RIGHT_CLICK_BLOCK || action == Action.LEFT_CLICK_BLOCK)) {
+                var noteBlockManager = instance.getNoteBlockManager();
+                var noteBlock = noteBlockManager.getNoteBlockData(block);
+                var blockID = noteBlockManager.getBlockID(noteBlock);
+                var player = e.getPlayer();
 
-            var noteBlock = tool.getNoteBlockData(block);
-            var blockID = tool.getBlockID(noteBlock);
-
-            var player = e.getPlayer();
-            if(guiCodes.containsKey(blockID) && !player.isSneaking()){
-
-                var manager = instance.getDecoLunchManager();
-                var guiCode = guiCodes.get(blockID);
-                var location = block.getRelative(e.getBlockFace()).getLocation();
-                var gui = manager.getGui(guiCode, location);
-                gui.open(player);
+                Bukkit.getPluginManager().callEvent(new CustomBlockClickEvent(blockID, block, player, action));
 
             }
 
         }
 
     }
-
+    
     @EventHandler
-    public void onPlace(BlockPlaceEvent e){
+    public void onPlace(BlockPlaceEvent e) {
         var block = e.getBlock();
         var item = e.getItemInHand();
-        var manager = instance.getDecoLunchManager();
-        
-        if(block.getType() == Material.NOTE_BLOCK && item != null){
-            var tool = instance.getNoteBlockTool();
+        var manager = instance.getCustomBlocksManager();
 
-            if(manager.isDecoItem(item)){
-                var decoItem = manager.getDecoItem(item);
-                var noteBlock = tool.getNoteBlockData(decoItem.getBlockID());
-                if(noteBlock != null){
+        if (block.getType() == Material.NOTE_BLOCK && item != null) {
+            var tool = instance.getNoteBlockManager();
+
+            if (manager.isCustomBlock(item)) {
+                var customBlock = manager.getCustomBlock(item);
+                var noteBlock = tool.getNoteBlockData(customBlock.getBlockID());
+                if (noteBlock != null) {
                     block.setBlockData(noteBlock);
                 }
-            }else{
+            } else {
                 block.setBlockData(tool.getDefaultBlockData());
             }
 
@@ -70,22 +71,23 @@ public class NoteBlockListener implements Listener {
     }
 
     @EventHandler
-    public void onBreak(BlockBreakEvent e){
+    public void onBreak(BlockBreakEvent e) {
         var block = e.getBlock();
-        var manager = instance.getDecoLunchManager();
-        var tool = instance.getNoteBlockTool();
-        
-        if(block.getType() == Material.NOTE_BLOCK){
-            if(tool.isDefaultNoteBlock(block)) return;
+        var manager = instance.getCustomBlocksManager();
+        var tool = instance.getNoteBlockManager();
+
+        if (block.getType() == Material.NOTE_BLOCK) {
+            if (tool.isDefaultNoteBlock(block))
+                return;
             e.setDropItems(false);
-            
+
             var noteBlock = tool.getNoteBlockData(block);
             var blockID = tool.getBlockID(noteBlock);
-            var decoItem = manager.getDecoItemByBlockID(blockID);
-            
-            if(decoItem != null){
+            var customBlock = manager.getCustomBlockByBlockID(blockID);
+
+            if (customBlock != null) {
                 var loc = block.getLocation();
-                block.getWorld().dropItemNaturally(loc, decoItem.getItemStack());
+                block.getWorld().dropItemNaturally(loc, customBlock.getItemStack());
             }
 
         }

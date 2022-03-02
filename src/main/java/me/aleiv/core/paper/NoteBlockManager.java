@@ -1,5 +1,6 @@
 package me.aleiv.core.paper;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import com.google.gson.JsonObject;
@@ -181,6 +182,30 @@ public class NoteBlockManager {
                 var obj = gson.fromJson(value, NoteBlockID.class);
                 map.put(key, obj);
 
+            }
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
+    public void pullJsonCode() {  
+        try {
+            var gson = instance.getGson();
+            var jsonConfig = new String(Core.getInstance().getResource("noteblocks.json").readAllBytes(), StandardCharsets.UTF_8);
+            var list = gson.fromJson(jsonConfig, JsonObject.class);
+            var iter = list.entrySet().iterator();
+            var map = noteblocks;
+
+            while (iter.hasNext()) {
+                var entry = iter.next();
+                var key = entry.getKey();
+                var value = entry.getValue();
+                var obj = gson.fromJson(value, NoteBlockID.class);
+
+                map.put(key, obj);
             }
 
         } catch (Exception e) {

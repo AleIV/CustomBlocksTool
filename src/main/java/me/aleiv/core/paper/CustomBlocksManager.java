@@ -24,8 +24,8 @@ public class CustomBlocksManager{
         return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
     }
 
-    public CustomBlock getDecoItemByBlockID(String blockID) {
-        return customBlocks.values().stream().filter(decoItem -> decoItem.getBlockID().equals(blockID)).findAny()
+    public CustomBlock getCustomBlockByBlockID(String blockID) {
+        return customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID().equals(blockID)).findAny()
                 .orElse(null);
     }
 

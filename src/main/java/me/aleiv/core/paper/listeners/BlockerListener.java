@@ -1,5 +1,6 @@
 package me.aleiv.core.paper.listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -66,6 +67,7 @@ public class BlockerListener implements Listener{
             var tool = instance.getNoteBlockManager();
             if (tool.isDefaultNoteBlock(block)) {
                 //TODO: vanilla noteblock
+                Bukkit.broadcastMessage("VANILLA BLOCK");
             }
         }
     }
