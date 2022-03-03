@@ -83,6 +83,7 @@ public class CustomBlocksCMD extends BaseCommand {
             var customBlock = new CustomBlock(customBlockName, blockID, customModelData);
 
             customBlocks.put(customBlockName, customBlock);
+            customBlocksManager.pushJson();
             sender.sendMessage(ChatColor.YELLOW + "Added new custom block " + customBlockName + ".");
         }
 
@@ -96,6 +97,7 @@ public class CustomBlocksCMD extends BaseCommand {
 
         if (customBlocks.containsKey(customBlockName)) {
             customBlocks.remove(customBlockName);
+            customBlocksManager.pushJson();
             sender.sendMessage(ChatColor.YELLOW + "Removed custom block " + customBlockName + ".");
         } else {
 
