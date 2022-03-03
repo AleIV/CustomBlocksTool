@@ -23,7 +23,8 @@ public class NoteBlockListener implements Listener {
 
     @EventHandler
     public void onClick(CustomBlockClickEvent e){
-        Bukkit.broadcastMessage(ChatColor.AQUA + e.toString());
+        var player = e.getPlayer();
+        player.sendMessage(ChatColor.AQUA + e.toString());
     }
 
     @EventHandler

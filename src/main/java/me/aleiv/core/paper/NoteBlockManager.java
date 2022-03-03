@@ -25,7 +25,7 @@ public class NoteBlockManager {
     public NoteBlockManager(Core instance) {
         this.instance = instance;
 
-        pullJson();
+        pullJsonCode();
     }
 
     public boolean isDefaultNoteBlock(Block block) {

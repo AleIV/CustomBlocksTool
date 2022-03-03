@@ -2,6 +2,7 @@ package me.aleiv.core.paper.commands;
 
 import com.google.common.collect.ImmutableList;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import co.aikar.commands.BaseCommand;
@@ -101,6 +102,14 @@ public class CustomBlocksCMD extends BaseCommand {
             sender.sendMessage(ChatColor.RED + "Custom block " + customBlockName + " doesn't exist.");
         }
 
+    }
+
+    @Subcommand("list")
+    public void list(CommandSender sender) {
+        var customBlocksManager = instance.getCustomBlocksManager();
+        var customBlocks = customBlocksManager.getCustomBlocks();
+
+        sender.sendMessage(ChatColor.YELLOW + "Custom block list: " + ChatColor.WHITE + customBlocks.keySet().toString() + ".");
     }
 
 }

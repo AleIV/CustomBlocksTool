@@ -325,7 +325,7 @@ public class ResourcePackManager implements Listener {
         }
     }
 
-    private int getVersionNumber() {
+    public int getVersionNumber() {
         String[] split = Bukkit.getBukkitVersion().split("-")[0].split("\\.");
         return Integer.parseInt(split[1]);
     }

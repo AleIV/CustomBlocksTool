@@ -11,6 +11,7 @@ import kr.entree.spigradle.annotations.SpigotPlugin;
 import lombok.Getter;
 import me.aleiv.core.paper.commands.CustomBlocksCMD;
 import me.aleiv.core.paper.listeners.BlockerListener;
+import me.aleiv.core.paper.listeners.NoteBlockListener;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 @SpigotPlugin
@@ -27,19 +28,20 @@ public class Core extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        //MANAGER
+
+        this.customBlocksManager = new CustomBlocksManager(this);
+        this.noteBlockManager = new NoteBlockManager(this);
+        
         //LISTENERS
 
         Bukkit.getPluginManager().registerEvents(new BlockerListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new NoteBlockListener(this), this);
 
         //COMMANDS
         
         commandManager = new PaperCommandManager(this);
         commandManager.registerCommand(new CustomBlocksCMD(this));
-
-        //MANAGER
-
-        this.customBlocksManager = new CustomBlocksManager(this);
-        this.noteBlockManager = new NoteBlockManager(this);
 
         //TODO: Events to listen from API the custom blocks
 
