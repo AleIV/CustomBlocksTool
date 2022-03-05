@@ -43,7 +43,7 @@ public class CustomBlocksManager{
         }
         return false;
     }
-
+    
     public CustomBlock getCustomBlock(ItemStack item) {
         
         if (isCustomBlock(item)) {

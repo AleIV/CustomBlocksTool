@@ -47,6 +47,7 @@ public class CustomBlocksCMD extends BaseCommand {
     }
 
     @Subcommand("give")
+    @CommandCompletion("@customblocks")
     public void give(Player sender, String customBlockName){
 
         var inv = sender.getInventory();
@@ -67,19 +68,31 @@ public class CustomBlocksCMD extends BaseCommand {
 
     @Subcommand("add")
     @CommandCompletion("@bool @instrument @num @num @name")
-    public void add(Player sender, boolean powered, String instrument, int note, int customModelData,
+    public void add(CommandSender sender, boolean powered, String instrument, int note, int customModelData,
             String customBlockName) {
 
         var customBlocksManager = instance.getCustomBlocksManager();
         var customBlocks = customBlocksManager.getCustomBlocks();
 
-        if (customBlocks.containsKey(customBlockName)) {
-            // TODO: ADD OTHER THINGS BLOCKED BY EXIST
-            sender.sendMessage(ChatColor.RED + "Can't add custom block " + customBlockName + ".");
-        } else {
+        var noteBlockManager = instance.getNoteBlockManager();
+        var blockID = noteBlockManager.getBlockIDbyData(instrument, note, powered);
 
-            var noteBlockManager = instance.getNoteBlockManager();
-            var blockID = noteBlockManager.getBlockIDbyData(instrument, note, powered);
+        var existModelData = customBlocks.values().stream().filter(cb -> cb.getCustomModelData() == customModelData).toList().isEmpty();
+
+        if (customBlocks.containsKey(customBlockName)) {
+
+            sender.sendMessage(ChatColor.RED + "Can't add custom block " + customBlockName + ", name already registered.");
+
+        }else if(customBlocksManager.hasCustomBlock(blockID)){
+
+            sender.sendMessage(ChatColor.RED + "Can't add custom block " + customBlockName + ", block id already registered.");
+
+        }else if(existModelData){
+
+            sender.sendMessage(ChatColor.RED + "Can't add custom block " + customBlockName + ", custom model data already exist.");
+
+        }else {
+
             var customBlock = new CustomBlock(customBlockName, blockID, customModelData);
 
             customBlocks.put(customBlockName, customBlock);
@@ -91,7 +104,7 @@ public class CustomBlocksCMD extends BaseCommand {
 
     @Subcommand("remove")
     @CommandCompletion("@customblocks")
-    public void remove(Player sender, String customBlockName) {
+    public void remove(CommandSender sender, String customBlockName) {
         var customBlocksManager = instance.getCustomBlocksManager();
         var customBlocks = customBlocksManager.getCustomBlocks();
 
@@ -99,6 +112,7 @@ public class CustomBlocksCMD extends BaseCommand {
             customBlocks.remove(customBlockName);
             customBlocksManager.pushJson();
             sender.sendMessage(ChatColor.YELLOW + "Removed custom block " + customBlockName + ".");
+
         } else {
 
             sender.sendMessage(ChatColor.RED + "Custom block " + customBlockName + " doesn't exist.");
