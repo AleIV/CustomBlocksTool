@@ -5,7 +5,6 @@ import org.bukkit.inventory.ItemStack;
 
 import lombok.Data;
 import net.md_5.bungee.api.ChatColor;
-import us.jcedeno.libs.rapidinv.ItemBuilder;
 
 @Data
 public class CustomBlock {
