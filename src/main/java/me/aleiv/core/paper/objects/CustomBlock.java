@@ -3,6 +3,7 @@ package me.aleiv.core.paper.objects;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import fr.mrmicky.fastinv.ItemBuilder;
 import lombok.Data;
 import net.md_5.bungee.api.ChatColor;
 

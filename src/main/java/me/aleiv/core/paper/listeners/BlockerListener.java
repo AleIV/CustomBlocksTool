@@ -52,6 +52,9 @@ public class BlockerListener implements Listener{
         var hand = e.getHand();
         var player = e.getPlayer();
         var equip = player.getEquipment();
+        
+        if(hand == null) return;
+
         var item = equip.getItem(hand);
 
         var block = e.getClickedBlock();
@@ -66,7 +69,7 @@ public class BlockerListener implements Listener{
             var tool = instance.getNoteBlockManager();
             if (tool.isDefaultNoteBlock(block)) {
                 //TODO: vanilla noteblock
-                player.sendMessage("VANILLA BLOCK");
+                //player.sendMessage("VANILLA BLOCK");
             }
         }
     }
