@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.objects;
+package me.aleiv.core.blocks.objects;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.listeners;
+package me.aleiv.core.blocks.listeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -9,15 +9,15 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import me.aleiv.core.paper.Core;
-import me.aleiv.core.paper.events.CustomBlockClickEvent;
+import me.aleiv.core.blocks.CoreBlocks;
+import me.aleiv.core.blocks.events.CustomBlockClickEvent;
 import net.md_5.bungee.api.ChatColor;
 
 public class NoteBlockListener implements Listener {
 
-    Core instance;
+    CoreBlocks instance;
 
-    public NoteBlockListener(Core instance) {
+    public NoteBlockListener(CoreBlocks instance) {
         this.instance = instance;
     }
 

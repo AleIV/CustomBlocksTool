@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.listeners;
+package me.aleiv.core.blocks.listeners;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,13 +11,13 @@ import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.block.NotePlayEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import me.aleiv.core.paper.Core;
+import me.aleiv.core.blocks.CoreBlocks;
 
 public class BlockerListener implements Listener{
     
-    Core instance;
+    CoreBlocks instance;
 
-    public BlockerListener(Core instance){
+    public BlockerListener(CoreBlocks instance){
         this.instance = instance;
     }
 

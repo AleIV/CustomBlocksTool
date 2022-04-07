@@ -1,31 +1,31 @@
-package me.aleiv.core.paper;
+package me.aleiv.core.blocks;
 
 import java.util.HashMap;
 
 import com.google.gson.JsonObject;
 
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import lombok.Getter;
-import me.aleiv.core.paper.objects.CustomBlock;
-import me.aleiv.core.paper.utilities.JsonConfig;
+import me.aleiv.core.blocks.objects.CustomBlock;
+import me.aleiv.core.blocks.utilities.JsonConfig;
 
 public class CustomBlocksManager{
 
-    Core instance;
+    CoreBlocks instance;
     @Getter HashMap<String, CustomBlock> customBlocks = new HashMap<>();
 
-    public CustomBlocksManager(Core instance) {
+    public CustomBlocksManager(CoreBlocks instance) {
         this.instance = instance;
 
         pullJson();
     }
 
     public boolean hasCustomBlock(String blockID) {
-        return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
+        return customBlocks.values().stream().anyMatch(block -> block.getBlockID().equals(blockID));
+        //return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID().equals(blockID)).toList().isEmpty();
     }
 
     public CustomBlock getCustomBlockByBlockID(String blockID) {
@@ -54,8 +54,7 @@ public class CustomBlocksManager{
         return null;
     }
 
-    public CustomBlock getCustomBlock(Location loc) {
-        var block = loc.getBlock();
+    public CustomBlock getCustomBlock(Block block) {
         if(isCustomBlock(block)){
             var noteBlockManager = instance.getNoteBlockManager();
 
@@ -66,7 +65,7 @@ public class CustomBlocksManager{
     }
 
     public CustomBlock getCustomBlock(String blockID){
-        return customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).findAny().orElse(null);
+        return customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID().equals(blockID)).findAny().orElse(null);
     }
 
     public boolean isCustomBlock(Block block){
@@ -74,7 +73,8 @@ public class CustomBlocksManager{
         if(!noteBlockManager.isNoteBlock(block)) return false;
 
         var blockID = noteBlockManager.getBlockID(block);
-        return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
+        return customBlocks.values().stream().anyMatch(customBlock -> customBlock.getBlockID().equals(blockID));
+        //return !customBlocks.values().stream().filter(customBlock -> customBlock.getBlockID() == blockID).toList().isEmpty();
     }
 
     public void pushJson(){

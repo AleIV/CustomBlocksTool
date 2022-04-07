@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.commands;
+package me.aleiv.core.blocks.commands;
 
 import com.google.common.collect.ImmutableList;
 
@@ -11,17 +11,17 @@ import co.aikar.commands.annotation.CommandCompletion;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Subcommand;
 import lombok.NonNull;
-import me.aleiv.core.paper.Core;
-import me.aleiv.core.paper.objects.CustomBlock;
+import me.aleiv.core.blocks.CoreBlocks;
+import me.aleiv.core.blocks.objects.CustomBlock;
 import net.md_5.bungee.api.ChatColor;
 
 @CommandAlias("customblocks")
 @CommandPermission("customblocks.cmd")
 public class CustomBlocksCMD extends BaseCommand {
 
-    private @NonNull Core instance;
+    private @NonNull CoreBlocks instance;
 
-    public CustomBlocksCMD(Core instance) {
+    public CustomBlocksCMD(CoreBlocks instance) {
         this.instance = instance;
 
         var manager = instance.getCommandManager();

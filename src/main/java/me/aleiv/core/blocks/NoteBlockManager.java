@@ -1,4 +1,4 @@
-package me.aleiv.core.paper;
+package me.aleiv.core.blocks;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -13,16 +13,16 @@ import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import lombok.Getter;
-import me.aleiv.core.paper.objects.NoteBlockID;
-import me.aleiv.core.paper.utilities.JsonConfig;
+import me.aleiv.core.blocks.objects.NoteBlockID;
+import me.aleiv.core.blocks.utilities.JsonConfig;
 import net.md_5.bungee.api.ChatColor;
 
 public class NoteBlockManager {
 
-    Core instance;
+    CoreBlocks instance;
     @Getter HashMap<String, NoteBlockID> noteblocks = new HashMap<>();
 
-    public NoteBlockManager(Core instance) {
+    public NoteBlockManager(CoreBlocks instance) {
         this.instance = instance;
 
         pullJsonCode();
@@ -194,7 +194,7 @@ public class NoteBlockManager {
     public void pullJsonCode() {  
         try {
             var gson = instance.getGson();
-            var jsonConfig = new String(Core.getInstance().getResource("noteblocks.json").readAllBytes(), StandardCharsets.UTF_8);
+            var jsonConfig = new String(CoreBlocks.getInstance().getResource("noteblocks.json").readAllBytes(), StandardCharsets.UTF_8);
             var list = gson.fromJson(jsonConfig, JsonObject.class);
             var iter = list.entrySet().iterator();
             var map = noteblocks;

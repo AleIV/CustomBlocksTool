@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.objects;
+package me.aleiv.core.blocks.objects;
 
 import org.bukkit.Instrument;
 import org.bukkit.Note.Tone;

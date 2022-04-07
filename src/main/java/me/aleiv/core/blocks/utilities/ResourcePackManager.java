@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.utilities;
+package me.aleiv.core.blocks.utilities;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

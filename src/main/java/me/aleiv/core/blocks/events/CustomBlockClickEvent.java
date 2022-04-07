@@ -1,4 +1,4 @@
-package me.aleiv.core.paper.events;
+package me.aleiv.core.blocks.events;
 
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

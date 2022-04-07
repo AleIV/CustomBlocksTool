@@ -1,4 +1,4 @@
-package me.aleiv.core.paper;
+package me.aleiv.core.blocks;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,17 +9,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 import co.aikar.commands.PaperCommandManager;
 import kr.entree.spigradle.annotations.SpigotPlugin;
 import lombok.Getter;
-import me.aleiv.core.paper.commands.CustomBlocksCMD;
-import me.aleiv.core.paper.listeners.BlockerListener;
-import me.aleiv.core.paper.listeners.NoteBlockListener;
-import net.kyori.adventure.text.minimessage.MiniMessage;
+import me.aleiv.core.blocks.commands.CustomBlocksCMD;
+import me.aleiv.core.blocks.listeners.BlockerListener;
+import me.aleiv.core.blocks.listeners.NoteBlockListener;
 
 @SpigotPlugin
-public class Core extends JavaPlugin {
+public class CoreBlocks extends JavaPlugin {
 
-    private static @Getter Core instance;
+    private static CoreBlocks instance;
     private @Getter PaperCommandManager commandManager;
-    private @Getter static MiniMessage miniMessage = MiniMessage.get();
+    //private @Getter static MiniMessage miniMessage = MiniMessage.get();
     private @Getter CustomBlocksManager customBlocksManager;
     private @Getter NoteBlockManager noteBlockManager;
     private @Getter Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -50,6 +49,10 @@ public class Core extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    public static CoreBlocks getInstance() {
+        return instance;
     }
 
 }
