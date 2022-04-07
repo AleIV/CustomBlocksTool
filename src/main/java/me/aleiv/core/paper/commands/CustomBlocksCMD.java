@@ -77,7 +77,7 @@ public class CustomBlocksCMD extends BaseCommand {
         var noteBlockManager = instance.getNoteBlockManager();
         var blockID = noteBlockManager.getBlockIDbyData(instrument, note, powered);
 
-        var existModelData = customBlocks.values().stream().filter(cb -> cb.getCustomModelData() == customModelData).toList().isEmpty();
+        var existModelData = !customBlocks.values().stream().filter(cb -> cb.getCustomModelData() == customModelData).toList().isEmpty();
 
         if (customBlocks.containsKey(customBlockName)) {
 
