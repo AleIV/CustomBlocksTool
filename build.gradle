@@ -11,8 +11,10 @@ plugins{
     id 'com.github.johnrengelman.shadow' version '7.0.0'
     id 'io.freefair.lombok' version '6.1.0'
 }
+apply plugin: 'maven-publish'
+apply plugin: 'java'
 
-group = 'net.aleiv'
+group = 'com.github.aleiv'
 version = '0.1-SNAPSHOT'
 
 compileJava{
@@ -69,6 +71,15 @@ spigot {
     load STARTUP
     //depends = ['ProtocolLib']
 }
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 
 shadowJar {
     relocate 'co.aikar.commands', 'shadded.acf'
